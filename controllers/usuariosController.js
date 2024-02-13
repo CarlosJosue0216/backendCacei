@@ -13,3 +13,22 @@ export async function autenticar(req, res) {
       return res.json({ msg: 'Login exitoso' });
     }
   }
+export async function createUser(req,res){
+  const { nombre, numControl,rol } = req.body;
+  const byname = await User.findByName(nombre)
+  if (byname) {
+    return res.status(500).json({ msg: 'Este usuario ya existe' });
+  }
+  try {
+    const user = await User.create(nombre, numControl,rol);
+    if (!user) {
+      return res.status(500).json({ msg: 'Error en el servidor' });
+    }else{
+      return res.json({ msg: 'Registrado correctamente' });
+    }
+    
+  }  catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: 'Error en el servidor' });
+  }
+}
