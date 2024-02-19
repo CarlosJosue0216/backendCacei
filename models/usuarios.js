@@ -1,4 +1,3 @@
-
 import pool from '../config/bd.js';
 const User = {
     async create(nombre,numControl,rol){

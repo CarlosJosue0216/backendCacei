@@ -7,7 +7,7 @@ export async function autenticar(req, res) {
     if (!user) {
       return res.status(404).json({ msg: 'Usuario no existe' });
     }
-    if (user.numControl !== numControl) {
+    if (user.numControl != numControl) {
       return res.status(404).json({ msg: 'num de control incorrecto' });
     }else{
       return res.json({ msg: 'Login exitoso' });

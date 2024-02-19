@@ -1,9 +1,12 @@
 import express from "express"
 import pool from "./config/bd.js";
 import routerUsers from "./routes/usuariosRoutes.js";
+import routerQuestion from "./routes/preguntasRoutes.js";
+import routerResult from "./routes/resultadosRoutes.js";
+import cors from 'cors';
 const app = express()
 app.use(express.json())
-
+app.use(cors())
 
 pool.getConnection()
   .then((connection) => {
@@ -15,6 +18,8 @@ pool.getConnection()
   });
 
   app.use('/api/usuarios',routerUsers);
+  app.use('/api/preguntas',routerQuestion);
+  app.use('/api/resultado',routerResult);
 const PORT = 4000;
 app.listen(PORT , ()=>{
     console.log( `server listening on port ${PORT} `);
