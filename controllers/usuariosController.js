@@ -32,3 +32,8 @@ export async function createUser(req,res){
     res.status(500).json({ msg: 'Error en el servidor' });
   }
 }
+export async function userLoged(req, res) {
+  const { nombre } = req.body;
+  const user = await User.findByName(nombre);
+  res.json({msg:user})
+}
