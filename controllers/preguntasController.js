@@ -86,10 +86,7 @@ export async function addQuestionAndAnswers(req, res) {
       const preguntasConRespuestas = preguntas.map((pregunta) => {
         return {
           ...pregunta,
-          respuestas: respuestas.filter((respuesta) => {
-            console.log(respuesta.idPregunta)
-            console.log(pregunta.id)
-            respuesta.idPregunta === pregunta.id}),
+          respuestas: respuestas.filter((respuesta) => respuesta.idPregunta == pregunta.id),
         };
       });
   
