@@ -17,7 +17,7 @@ const Preguntas = {
   },
   async findQuestionByTitle(titulo) {
     const [rows] = await pool.query("SELECT * FROM preguntas WHERE titulo = ?", [
-      titulo,
+      titulo
     ]);
     return rows.length ? rows[0] : null;
   },

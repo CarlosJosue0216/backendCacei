@@ -3,14 +3,14 @@ import Preguntas from "../models/preguntas.js"
 import Respuestas from "../models/respuestas.js"
 
 export async function addQuestion(req,res){
-    const {titulo,contenido,tipo} = req.body
+    const {titulo,criterio,tipo} = req.body
     const byId = await Preguntas.findQuestionByTitle(titulo)
     console.log(byId)
   if (byId) {
     return res.status(500).json({ msg: 'Esta pregunta ya existe' });
   }
   try {
-    const pregunta = await Preguntas.create(titulo, contenido,tipo);
+    const pregunta = await Preguntas.create(titulo, criterio,tipo);
     if (!pregunta) {
       return res.status(500).json({ msg: 'Error en el servidor' });
     }else{
@@ -54,10 +54,10 @@ export async function showQuestionById(req,res){
 }
 export async function addQuestionAndAnswers(req, res) {
     try {
-      const { titulo, contenido,tipo, respuestas } = req.body;
+      const { titulo, criterio,tipo, respuestas } = req.body;
   
       // Registrar la pregunta
-      const pregunta = await Preguntas.create(titulo,contenido,tipo );
+      const pregunta = await Preguntas.create(titulo,criterio,tipo );
         
       // Registrar las respuestas asociadas a la pregunta
      
