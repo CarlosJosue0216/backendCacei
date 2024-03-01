@@ -3,6 +3,7 @@ import pool from "./config/bd.js";
 import routerUsers from "./routes/usuariosRoutes.js";
 import routerQuestion from "./routes/preguntasRoutes.js";
 import routerResult from "./routes/resultadosRoutes.js";
+import fileRoutes from './routes/filesRoutes.js';
 import cors from 'cors';
 const app = express()
 app.use(express.json())
@@ -20,6 +21,7 @@ pool.getConnection()
   app.use('/api/usuarios',routerUsers);
   app.use('/api/preguntas',routerQuestion);
   app.use('/api/resultado',routerResult);
+  app.use('/api/files', fileRoutes);
 const PORT = 4000;
 app.listen(PORT , ()=>{
     console.log( `server listening on port ${PORT} `);

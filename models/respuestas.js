@@ -23,7 +23,7 @@ const Respuestas = {
     return rows.length ? rows : null;
   },
   async findAllAnswer(){
-    const [rows] = await pool.query("SELECT * FROM respuestas order by idPregunta");
+    const [rows] = await pool.query("SELECT * FROM respuestas order by id,idPregunta");
       return rows.length ? rows : null;
   }
 };
