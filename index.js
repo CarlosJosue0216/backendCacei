@@ -17,7 +17,7 @@ pool.getConnection()
   .catch((err) => {
     console.error('Error al conectarse a la base de datos MySQL:', err.message);
   });
-
+  app.use('/uploads', express.static('uploads'));
   app.use('/api/usuarios',routerUsers);
   app.use('/api/preguntas',routerQuestion);
   app.use('/api/resultado',routerResult);

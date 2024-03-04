@@ -1,21 +1,34 @@
-// controllers/fileController.mjs
+// controllers/filesController.js
+import { json } from "express";
 import FileModel from "../models/files.js";
-
+import fs from "node:fs";
 class FileController {
-  static async uploadFiles(req, res) {
+  static async uploadFile(req, res) {
+    const archivoFront = req.file;
+    console.log(archivoFront)
+    const { idUsuario, idPregunta } = req.body;
     try {
-      const { idUsuario, idPregunta } = req.body; // Ajusta esto según cómo se envían los datos desde el front-end
-      const files = req.files.map(
-        (file) => new FileModel(file, idUsuario, idPregunta)
+      saveImage(archivoFront);
+      const resultado = await FileModel.save(
+        archivoFront,
+        idUsuario,
+        idPregunta
       );
-      await Promise.all(files.map((file) => file.save()));
-
-      res.send("Archivos subidos correctamente.");
+      console.log(resultado)
+      return res.json({
+        resultado,
+      });
     } catch (error) {
-      console.error(error);
-      res.status(500).send("Error al procesar la solicitud.");
+      console.log(error)
+      return res.json({
+        resultado,
+      });
     }
   }
 }
-
+function saveImage(file) {
+  const newPath = `./uploads/${file.originalname}`;
+  fs.renameSync(file.path, newPath);
+  return newPath;
+}
 export default FileController;
