@@ -8,7 +8,7 @@ export async function addResult(req, res) {
     try {
         const response = await Resultado.add(idPregunta, idRespuesta, idUsuario);
         console.log(response);
-        res.status(200).json({ resultado: "Éxito" });
+        res.status(200).json({ msg: "Guardado exitosamente" });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: "Error interno del servidor" });

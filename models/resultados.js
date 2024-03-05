@@ -9,10 +9,10 @@ const Resultado = {
           [idPregunta, idRespuesta, idUsuario]
         );
     
-        console.log(result)
+        return({msg:`Guardado exitosamente ` } )
         
       } catch (error) {
-        console.log(error)
+        res.json({msg:error  } )
       }
     },
     async findByUser(userId) {
