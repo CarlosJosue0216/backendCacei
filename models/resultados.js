@@ -3,16 +3,31 @@ import pool from "../config/bd.js";
 const Resultado = {
     async add (idPregunta,idRespuesta,idUsuario){
       try {
-        
-        const result = await pool.query(
-          'INSERT INTO resultado (idPregunta, idRespuesta, idUsuario) VALUES (?, ?, ?)',
-          [idPregunta, idRespuesta, idUsuario]
+        // Verificar si ya hay una respuesta para esa pregunta y ese usuario
+        const existingResult = await pool.query(
+          'SELECT * FROM resultado WHERE idPregunta = ? AND idUsuario = ?',
+          [idPregunta, idUsuario]
         );
-    
-        return({msg:`Guardado exitosamente ` } )
+  
+        if (existingResult.length > 0) {
+          // Si ya existe, actualiza la respuesta
+          await pool.query(
+            'UPDATE resultado SET idRespuesta = ? WHERE idPregunta = ? AND idUsuario = ?',
+            [idRespuesta, idPregunta, idUsuario]
+          );
+          return { msg: 'Actualizado exitosamente' };
+        } else {
+          // Si no existe, agrega una nueva respuesta
+          await pool.query(
+            'INSERT INTO resultado (idPregunta, idRespuesta, idUsuario) VALUES (?, ?, ?)',
+            [idPregunta, idRespuesta, idUsuario]
+          );
+          return { msg: 'Guardado exitosamente' };
+        }
+  
         
       } catch (error) {
-        res.json({msg:error  } )
+        return { msg: error };
       }
     },
     async findByUser(userId) {
