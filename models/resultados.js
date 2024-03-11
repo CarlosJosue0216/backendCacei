@@ -1,41 +1,38 @@
 import pool from "../config/bd.js";
 
 const Resultado = {
-    async add (idPregunta,idRespuesta,idUsuario){
-      try {
-        // Verificar si ya hay una respuesta para esa pregunta y ese usuario
-        const existingResult = await pool.query(
-          'SELECT * FROM resultado WHERE idPregunta = ? AND idUsuario = ?',
-          [idPregunta, idUsuario]
-        );
+  async add(idPregunta, idRespuesta, idUsuario) {
+    try {
+      // Intenta realizar un UPDATE
+      const updateResult = await pool.query(
+        'UPDATE resultado SET idRespuesta = ? WHERE idPregunta = ? AND idUsuario = ?',
+        [idRespuesta, idPregunta, idUsuario]
+      );
   
-        if (existingResult.length > 0) {
-          // Si ya existe, actualiza la respuesta
-          await pool.query(
-            'UPDATE resultado SET idRespuesta = ? WHERE idPregunta = ? AND idUsuario = ?',
-            [idRespuesta, idPregunta, idUsuario]
-          );
-          return { msg: 'Actualizado exitosamente' };
-        } else {
-          // Si no existe, agrega una nueva respuesta
-          await pool.query(
-            'INSERT INTO resultado (idPregunta, idRespuesta, idUsuario) VALUES (?, ?, ?)',
-            [idPregunta, idRespuesta, idUsuario]
-          );
-          return { msg: 'Guardado exitosamente' };
-        }
-  
-        
-      } catch (error) {
-        return { msg: error };
+      if (updateResult.affectedRows > 0 && updateResult.changedRows > 0) {
+        // Si se actualizó al menos una fila y realmente se realizaron cambios
+        return { msg: 'Pregunta actualizada exitosamente' };
       }
-    },
-    async findByUser(userId) {
-        const [rows] = await pool.query("SELECT * FROM resultados WHERE idUsuario = ?", [userId]);
-        return rows.length ? rows[0] : null;
-      },
-      async addArgumentacion(){
+  
+      // Si no se actualizó ninguna fila o no se realizaron cambios, procede a la inserción
+      await pool.query(
+        'INSERT INTO resultado (idPregunta, idRespuesta, idUsuario) VALUES (?, ?, ?)',
+        [idPregunta, idRespuesta, idUsuario]
+      );
+  
+      return { msg: 'Guardado exitosamente' };
+    } catch (error) {
+      return { msg: error.message };
+    }
+  },
 
-      }
-}
-export default Resultado
+  async findByUser(userId) {
+    const [rows] = await pool.query(
+      "SELECT * FROM resultados WHERE idUsuario = ?",
+      [userId]
+    );
+    return rows.length ? rows[0] : null;
+  },
+  async addArgumentacion() {},
+};
+export default Resultado;
