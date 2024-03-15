@@ -7,5 +7,6 @@ const router = express.Router();
 const upload = multer({ dest: './uploads/' });
 
 router.post('/upload', upload.single('archivoFront'), FileController.uploadFile);
+router.get('/getFiles', FileController.getAllFiles);
 
 export default router;

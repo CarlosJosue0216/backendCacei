@@ -25,10 +25,21 @@ class FileController {
       });
     }
   }
+  static async getAllFiles(req,res){
+    try {
+      const result = await FileModel.getFiles()
+      console.log(result)
+      return res.json(result[0])
+    } catch (error) {
+      console.log(error)
+      return error
+    }
+  }
 }
 function saveImage(file) {
   const newPath = `./uploads/${file.originalname}`;
   fs.renameSync(file.path, newPath);
   return newPath;
 }
+
 export default FileController;
