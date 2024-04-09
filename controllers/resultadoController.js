@@ -14,3 +14,13 @@ export async function addResult(req, res) {
         res.status(500).json({ error: "Error interno del servidor" });
     }
 }
+
+export async function getAllResults(req, res) {
+    try {
+        const results = await Resultado.getAll(); // Suponiendo que tienes un método getAll en tu modelo Resultado
+        res.status(200).json(results);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+}
