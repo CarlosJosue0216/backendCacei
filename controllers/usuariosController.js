@@ -37,3 +37,7 @@ export async function userLoged(req, res) {
   const user = await User.findByName(nombre);
   res.json({msg:user})
 }
+export async function getAllUser (req,res){
+  const data = await User.findAllUsers()
+  res.json({data})
+}

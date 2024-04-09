@@ -19,6 +19,11 @@ const User = {
       async findUserById(userId) {
         const [rows] = await pool.query("SELECT * FROM usuarios WHERE id = ?", [userId]);
         return rows.length ? rows[0] : null;
+      },
+      async findAllUsers(){
+        const data = await pool.query("Select * from usuarios")
+        console.log(data[0])
+        return data[0]
       }
 }
 export default User;

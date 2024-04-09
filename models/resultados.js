@@ -55,7 +55,28 @@ const Resultado = {
     const [rows] = await pool.query(query);
     return rows;
   },
-
+  async getByPregunta(idPregunta) {
+    const query = `
+        SELECT 
+            res.id AS id_resultado,
+            res.idPregunta,
+            pre.titulo AS titulo_pregunta,
+            res.idRespuesta,
+            resp.contenido AS contenido_respuesta,
+            res.idUsuario,
+            u.nombre AS nombre_usuario
+        FROM 
+            resultado res
+        JOIN
+            preguntas pre ON res.idPregunta = pre.id
+        JOIN
+            respuestas resp ON res.idRespuesta = resp.id
+        JOIN
+            usuarios u ON res.idUsuario = u.id
+        WHERE res.idPregunta = ?`;
+    const [rows] = await pool.query(query, [idPregunta]);
+    return rows;
+  },
 
   async addArgumentacion() {},
 };
