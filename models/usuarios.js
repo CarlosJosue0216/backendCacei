@@ -1,9 +1,9 @@
 import pool from '../config/bd.js';
 const User = {
-    async create(nombre,numControl,rol){
+    async create(nombre,numControl,rol,criterio){
         const [result] = await pool.query(
-            'INSERT INTO usuarios (nombre, numControl, rol) VALUES (?, ?, ?)',
-            [nombre, numControl, rol]
+            'INSERT INTO usuarios (nombre, numControl, rol,criterio) VALUES (?, ?, ?,?)',
+            [nombre, numControl, rol,criterio]
           );
       
           return result.insertId;

@@ -14,13 +14,13 @@ export async function autenticar(req, res) {
     }
   }
 export async function createUser(req,res){
-  const { nombre, numControl,rol } = req.body;
+  const { nombre, password,rol,criterio } = req.body;
   const byname = await User.findByName(nombre)
   if (byname) {
     return res.status(500).json({ msg: 'Este usuario ya existe' });
   }
   try {
-    const user = await User.create(nombre, numControl,rol);
+    const user = await User.create(nombre, password,rol,criterio);
     if (!user) {
       return res.status(500).json({ msg: 'Error en el servidor' });
     }else{
