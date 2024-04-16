@@ -40,6 +40,7 @@ const Resultado = {
             res.id AS id_resultado,
             res.idPregunta,
             pre.titulo AS titulo_pregunta,
+            pre.criterio AS criterio,
             res.idRespuesta,
             resp.contenido AS contenido_respuesta,
             res.idUsuario,
@@ -61,6 +62,7 @@ const Resultado = {
             res.id AS id_resultado,
             res.idPregunta,
             pre.titulo AS titulo_pregunta,
+            
             res.idRespuesta,
             resp.contenido AS contenido_respuesta,
             res.idUsuario,
