@@ -8,8 +8,12 @@ import cors from 'cors';
 
 const app = express();
 
-// Configurar CORS antes de definir las rutas
-app.use(cors());
+// Configurar CORS con opciones detalladas
+app.use(cors({
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type, Authorization',
+}));
 
 app.use(express.json());
 
