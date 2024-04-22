@@ -25,6 +25,6 @@ pool.getConnection()
   app.use('/api/resultado',routerResult);
   app.use('/api/files', fileRoutes);
 const PORT = 4000;
-app.listen(PORT , ()=>{
+app.listen(PORT ,'0.0.0.0', ()=>{
     console.log( `server listening on port ${PORT} `);
 } );
